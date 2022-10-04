@@ -1,3 +1,5 @@
+Template'i hostlara assign ettikten sonra;
+
 C dizini altında p"oolsh" klasörü yaratıp ps1 dosyalarını içeri atınız,
 
 Zabbix agent conf dosyası içerisinde;
