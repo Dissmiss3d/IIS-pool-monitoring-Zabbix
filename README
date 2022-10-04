@@ -1,3 +1,5 @@
+Zabbix v5.0.10 ve agent v5 üzerinde test edildi
+
 Template'i hostlara assign ettikten sonra;
 
 C dizini altında "poolsh" klasörü yaratıp ps1 dosyalarını içeri atınız,
