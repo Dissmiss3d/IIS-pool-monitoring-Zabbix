@@ -1,0 +1,1520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2022-10-04T12:53:56Z</date>
+    <groups>
+        <group>
+            <name>Templates/Applications</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App Microsoft IIS</template>
+            <name>Template App Microsoft IIS</name>
+            <groups>
+                <group>
+                    <name>Templates/Applications</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>ASP.Net</name>
+                </application>
+                <application>
+                    <name>IIS</name>
+                </application>
+                <application>
+                    <name>IIS APP Pool</name>
+                </application>
+                <application>
+                    <name>IIS Cache</name>
+                </application>
+                <application>
+                    <name>IIS Connections</name>
+                </application>
+                <application>
+                    <name>IIS Data Transfer</name>
+                </application>
+                <application>
+                    <name>IIS Errors</name>
+                </application>
+                <application>
+                    <name>IIS Generic</name>
+                </application>
+                <application>
+                    <name>IIS Port</name>
+                </application>
+                <application>
+                    <name>IIS Requests</name>
+                </application>
+                <application>
+                    <name>IIS Service</name>
+                </application>
+                <application>
+                    <name>IIS Site</name>
+                </application>
+                <application>
+                    <name>IIS Users</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>HTTP Port 80</name>
+                    <key>net.tcp.listen[80]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>IIS Port</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>[{HOST.NAME}] Port HTTP 80 Unreachable</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>HTTPS Port 443</name>
+                    <key>net.tcp.listen[443]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>IIS Port</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=0</expression>
+                            <name>[{HOST.NAME}] Port HTTPS 443 Unreachable</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Service Uptime</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Service Uptime&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <units>s</units>
+                    <description>Uptime for WWW service</description>
+                    <applications>
+                        <application>
+                            <name>IIS</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;0&#13;
+and&#13;
+{last()}&lt;600</expression>
+                            <name>[{HOST.NAME}] IIS was Restarted</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Anonymous Users/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Anonymous Users&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which users have made anonymous requests to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Users</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Bytes Received/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Received&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>Bps</units>
+                    <description>The rate, in seconds, at which data bytes have been received by the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Data Transfer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Bytes Sent/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Sent&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>Bps</units>
+                    <description>The rate, in seconds, at which data bytes have been sent by the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Data Transfer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Bytes Total/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Transferred&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>Bps</units>
+                    <description>The sum of Bytes Sent/sec and Bytes Received/sec.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Data Transfer</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Connection attempts/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Connection Attempts (all instances)&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which connections to the WWW service have been attempted since the service started.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Connections</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Copy Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Copy Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the COPY method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Delete Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Delete Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the DELETE method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Get Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Get Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the GET method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Head Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Head Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the HEAD method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Locked Errors/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Locked Errors&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which requests were not satisfied because the requested document was locked.&#13;
+Usually reported as HTTP error 423.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Errors</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Lock Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Lock Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the LOCK method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Logon Attempts/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Logon Attempts&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which attempts to log on to the WWW service have occurred.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Connections</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Method Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which all HTTP requests have been received.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Mkcol Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Mkcol Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the MKCOL method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Move Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Move Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the MOVE method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>NonAnonymous Users/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total NonAnonymous Users&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which users have made nonanonymous requests to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Users</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Not Found Errors/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Not Found Errors&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which requests were not satisfied by the server because the requested document was not found.&#13;
+Usually reported as HTTP error 404.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Errors</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Options Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Options Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the OPTIONS method have been made.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Other Request Methods/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Other Request Methods&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that do not use the OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, MOVE, COPY, MKCOL, PROPFIND, PROPPATCH, SEARCH, LOCK, or UNLOCK methods since the WWW service started. Can include LINK or other methods supported by gateway applications.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Post Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Post Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which requests that use the POST method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Propfind Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Propfind Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the PROPFIND method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Proppatch Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Proppatch Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the PROPPATCH method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Put Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Put Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the PUT method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Search Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Search Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the SEARCH method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Trace Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Trace Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the TRACE method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Unlock Requests/sec</name>
+                    <key>perf_counter[&quot;\Web Service(_Total)\Total Unlock Requests&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>/sec</units>
+                    <description>The rate, in seconds, at which HTTP requests that use the UNLOCK method have been made to the WWW service.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Requests</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>CHANGE_PER_SECOND</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                </item>
+                <item>
+                    <name>Current Files Cached</name>
+                    <key>perf_counter[&quot;\Web Service Cache\Current Files Cached&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Current number of files whose content is in the user-mode cache</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Current Metadata Cached</name>
+                    <key>perf_counter[&quot;\Web Service Cache\Current Metadata Cached&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Current number of metadata information blocks currently in the user-mode cache.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Current URIs Cached</name>
+                    <key>perf_counter[&quot;\Web Service Cache\Current URIs Cached&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>URI information blocks currently in the user-mode cache</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>File Cache Flushes</name>
+                    <key>perf_counter[&quot;\Web Service Cache\File Cache Flushes&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>The number of files removed from the user-mode cache since service startup</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>File Cache Hits</name>
+                    <key>perf_counter[&quot;\Web Service Cache\File Cache Hits&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Total number of successful lookups in the user-mode file cache since service startup. The preferred value depends on content. For example, for static content, the value should be high.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>File Cache Hits %</name>
+                    <key>perf_counter[&quot;\Web Service Cache\File Cache Hits %&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>The ratio of user-mode file cache hits to total cache requests (since service startup).&#13;
+Note: This value might be low if the Kernel URI cache hits percentage is high.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>File Cache Misses</name>
+                    <key>perf_counter[&quot;\Web Service Cache\File Cache Misses&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Total number of unsuccessful lookups in the user-mode file cache since service startup.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Metadata Cache Hits</name>
+                    <key>perf_counter[&quot;\Web Service Cache\Metadata Cache Hits&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>The ratio of user-mode metadata cache hits to total cache requests (since service startup)</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>URI Cache Flushes</name>
+                    <key>perf_counter[&quot;\Web Service Cache\URI Cache Flushes&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Counts the number of URI cache flushes that have occurred since the service startup. Files are flushed if a response is taking longer than specified in the threshold or if a file was edited or modified.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>URI Cache Hits</name>
+                    <key>perf_counter[&quot;\Web Service Cache\URI Cache Hits&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Counts the number of successful lookups in the URI cache since the service startup. A low value for this counter is a strong indication that requests are not finding cached responses.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>URI Cache Hits %</name>
+                    <key>perf_counter[&quot;\Web Service Cache\URI Cache Hits %&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <description>The ratio of user-mode URI Cache Hits to total cache requests (since service startup)</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>URI Cache Misses</name>
+                    <key>perf_counter[&quot;\Web Service Cache\URI Cache Misses&quot;]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>Total number of unsuccessful lookups in the user-mode URI cache since service startup. You might want to investigate for issues if this value is high, in combination with a low URI Cache Hits value.</description>
+                    <applications>
+                        <application>
+                            <name>IIS Cache</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>MS FTP Service</name>
+                    <key>service_state[ftpsvc]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <description>Microsoft FTP Service</description>
+                    <applications>
+                        <application>
+                            <name>IIS Service</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Windows service state</name>
+                    </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;&gt;0</expression>
+                            <name>[{HOST.NAME}] FTP Service is Down</name>
+                            <status>DISABLED</status>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>IIS Admin Service</name>
+                    <key>service_state[IISADMIN]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>World Wide Web Publishing Service</description>
+                    <applications>
+                        <application>
+                            <name>IIS Service</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Windows service state</name>
+                    </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;&gt;0</expression>
+                            <name>[{HOST.NAME}] IISADMIN Service is Down</name>
+                            <status>DISABLED</status>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>World Side Web Publishing Service</name>
+                    <key>service_state[W3SVC]</key>
+                    <delay>3m</delay>
+                    <history>14d</history>
+                    <value_type>FLOAT</value_type>
+                    <description>World Wide Web Publishing Service</description>
+                    <applications>
+                        <application>
+                            <name>IIS Service</name>
+                        </application>
+                    </applications>
+                    <valuemap>
+                        <name>Windows service state</name>
+                    </valuemap>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&lt;&gt;0</expression>
+                            <name>[{HOST.NAME}] IIS Service is Down</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>IIS AppPool</name>
+                    <key>apppool.discovery</key>
+                    <delay>86400</delay>
+                    <lifetime>0</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>IIS AppPool {#APPPOOL}</name>
+                            <key>apppool.state[{#APPPOOL}]</key>
+                            <delay>10m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>IIS APP Pool</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{str(Stopped)}&lt;&gt;0</expression>
+                                    <name>IIS AppPool {#APPPOOL} is down</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>IIS Site</name>
+                    <key>site.discovery</key>
+                    <delay>86400</delay>
+                    <lifetime>0</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>IIS Site {#SITE}</name>
+                            <key>site.state[{#SITE}]</key>
+                            <delay>10m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>IIS Site</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{str(Stopped)}&lt;&gt;0</expression>
+                                    <name>IIS SIte {#SITE} is down</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <screens>
+                <screen>
+                    <name>IIS - Cache</name>
+                    <hsize>2</hsize>
+                    <vsize>2</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Current Cache</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - File Cache Hits and URI Cache %</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - File Cache</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - URI cache</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+                <screen>
+                    <name>IIS - Connections</name>
+                    <hsize>2</hsize>
+                    <vsize>3</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Requests/sec</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>900</width>
+                            <height>200</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>2</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Connections</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Bandwidth</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Errors</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>2</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>IIS - Anonymous and NonAnonymous Users</name>
+                                <host>Template App Microsoft IIS</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>2</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>IIS - Anonymous and NonAnonymous Users</name>
+            <graph_items>
+                <graph_item>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Anonymous Users&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total NonAnonymous Users&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - Bandwidth</name>
+            <graph_items>
+                <graph_item>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Transferred&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Sent&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Bytes Received&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - Connections</name>
+            <graph_items>
+                <graph_item>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Connection Attempts (all instances)&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Logon Attempts&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - Current Cache</name>
+            <graph_items>
+                <graph_item>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\Current Files Cached&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\Current Metadata Cached&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\Current URIs Cached&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - Errors</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Locked Errors&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Not Found Errors&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - File Cache</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\File Cache Flushes&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\File Cache Hits&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\File Cache Misses&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - File Cache Hits and URI Cache %</name>
+            <graph_items>
+                <graph_item>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\File Cache Hits %&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\URI Cache Hits %&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - Requests/sec</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Method Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Get Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>F230E0</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Post Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Head Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>89ABF8</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Copy Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Delete Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>6</sortorder>
+                    <color>FC6EA3</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Lock Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>7</sortorder>
+                    <color>6C59DC</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Mkcol Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>8</sortorder>
+                    <color>AC8C14</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Move Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>9</sortorder>
+                    <color>611F27</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Options Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>10</sortorder>
+                    <color>5CCD18</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Propfind Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>11</sortorder>
+                    <color>BB2A02</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Proppatch Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>12</sortorder>
+                    <color>5A2B57</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Put Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>13</sortorder>
+                    <color>7EC25C</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Search Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>14</sortorder>
+                    <color>274482</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Trace Requests&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>15</sortorder>
+                    <color>2B5429</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service(_Total)\Total Unlock Requests&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>IIS - URI cache</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\URI Cache Flushes&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\URI Cache Hits&quot;]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Microsoft IIS</host>
+                        <key>perf_counter[&quot;\Web Service Cache\URI Cache Misses&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+    <value_maps>
+        <value_map>
+            <name>Windows service state</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>Running</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>Paused</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>Start pending</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>Pause pending</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>Continue pending</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>Stop pending</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>Stopped</newvalue>
+                </mapping>
+                <mapping>
+                    <value>7</value>
+                    <newvalue>Unknown</newvalue>
+                </mapping>
+                <mapping>
+                    <value>255</value>
+                    <newvalue>No such service</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>
