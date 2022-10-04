@@ -1,3 +1,7 @@
+C dizini altında p"oolsh" klasörü yaratıp ps1 dosyalarını içeri atınız,
+
+Zabbix agent conf dosyası içerisinde;
+
 ####### USER-DEFINED MONITORED PARAMETERS #######
 
 ### Option: UnsafeUserParameters
